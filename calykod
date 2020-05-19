@@ -93,7 +93,7 @@ while True:
                                 print("Przegrana :()")
 
                 elif odpowiedz=="rozdwajam":
-                    if karta1_gracza[1]==karta2_gracza[1]:
+                    #if karta1_gracza[1]==karta2_gracza[1]:
                         # tablica_kart_przy_rozdwojeniu=
                         # karta3_gracza=random.choice(talia)
                         # talia.remove(karta3_gracza)
@@ -104,8 +104,8 @@ while True:
                         # print("Druga kombinacja kart to:", karta2_gracza,karta4_gracza)
                         # suma2_przy_rozdwojeniu=karta2_gracza[1]+karta4_gracza[1]
 
-                    else:
-                        print("Przy takiej kombinacji kart rozwiązanie to nie jest możliwe")
+                    #else:
+                        #print("Przy takiej kombinacji kart rozwiązanie to nie jest możliwe")
 
                 else:
                     print("Oj! Bardzo nie lubię łamania zasad!")
