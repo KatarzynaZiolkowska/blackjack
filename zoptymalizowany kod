@@ -1,0 +1,205 @@
+import random
+
+ #creating a game deck
+
+deck = []
+for i in ["KIER", "PIK", "KARO", "TREFL"]:
+    two = [ "2 " +i]
+    deck.append(two)
+    three = [ "3 " +i]
+    deck.append(three)
+    four = [ "4 " +i]
+    deck.append(four)
+    five = [ "5 " +i]
+    deck.append(five)
+    six = [ "6 " +i]
+    deck.append(six)
+    seven = ["7 " +i]
+    deck.append(seven)
+    eight = ["8 " +i]
+    deck.append(eight)
+    nine =["9 " +i]
+    deck.append(nine)
+    ten = ["10 " +i]
+    deck.append(ten)
+    jack = ["Walet " +i]
+    deck.append(jack)
+    queen = ["Dama " +i]
+    deck.append(queen)
+    king = ["Król " +i]
+    deck.append(king)
+    ace = ["As "+i]
+    deck.append(ace)
+
+#
+# print(deck)
+#
+# #
+def points(card,ppoints):
+    player_total_points=ppoints
+    if card == ['2 KIER'] or card == ['2 PIK'] or card == ['2 KARO'] or card == ['2 TREFL']:
+        player_total_points += 2
+    elif card == ['3 KIER'] or card == ['3 PIK'] or card == ['3 KARO'] or card == ['3 TREFL']:
+        player_total_points += 3
+    elif card == ['4 KIER'] or card == ['4 PIK'] or card == ['4 KARO'] or card == ['4 TREFL']:
+        player_total_points += 4
+    elif card == ['5 KIER'] or card == ['5 PIK'] or card == ['5 KARO'] or card == ['5 TREFL']:
+        player_total_points += 5
+    elif card == ['6 KIER'] or card == ['6 PIK'] or card == ['6 KARO'] or card == ['6 TREFL']:
+        player_total_points += 6
+    elif card == ['7 KIER'] or card == ['7 PIK'] or card == ['7 KARO'] or card == ['7 TREFL']:
+        player_total_points += 7
+    elif card == ['8 KIER'] or card == ['8 PIK'] or card == ['8 KARO'] or card == ['8 TREFL']:
+        player_total_points += 8
+    elif card == ['9 KIER'] or card == ['9 PIK'] or card == ['9 KARO'] or card == ['9 TREFL']:
+        player_total_points +=9
+    elif card == ['As KIER'] or card == ['As PIK'] or card == ['As KARO'] or card == ['As TREFL']:
+        player_total_points += 11
+        if player_total_points > 21:
+            player_total_points = player_total_points -10
+        else:
+            player_total_points = player_total_points
+    else:
+        player_total_points +=10
+
+    return player_total_points
+
+
+player_total_money=50
+print("Witaj w grze BLACKJACK!")
+
+
+while True:
+
+    if player_total_money<0:
+        print("Zbankrutowałeś,koniec gry")
+        break
+    print("Jeżeli chcesz zagrać wpisz \"graj\", jeżeli nie wpisz \"koniec\"")
+    decyzja=input()
+    if decyzja=="graj":
+        player_total_points = 0
+        croupier_total_points = 0
+
+        print("Obecnie posiadasz",player_total_money,"złotych")
+        rate = int(input("Jaką stawkę chcesz postawić (podaj wartość w złotówkach)? "))
+        player_total_money-=rate
+
+#card draw, first round
+
+
+#player's first card draw
+
+        player_first_card = random.choice(deck)
+        print("Twoja pierwsza karta to:", player_first_card)
+        player_total_points=points(player_first_card,player_total_points)
+
+#croupier's first card draw
+
+
+        croupier_first_card = random.choice(deck)
+        print("Pierwsza karta krupiera to:", croupier_first_card)
+        croupier_total_points=points(croupier_first_card,croupier_total_points)
+
+# print("Suma towich punktó to:", player_total_points)
+# print("suma punktów krupiera to:", croupier_total_points)
+
+#card draw, second round
+
+#player's second card draw
+
+        player_second_card = random.choice(deck)
+        print("Twoja druga karta to:", player_second_card)
+        player_total_points=points(player_second_card,player_total_points)
+
+
+#croupier's second card draw
+
+        croupier_second_card = random.choice(deck)
+        print("Druga karta krupiera jest zakryta")
+        croupier_total_points=points(croupier_second_card,croupier_total_points)
+
+ #counting points when player has ace
+        if player_first_card == ['As KIER'] or player_first_card == ['As PIK'] or player_first_card == ['As KARO'] or player_first_card == ['As TREFL'] or player_second_card == ['As KIER'] or player_second_card == ['As PIK'] or player_second_card == ['As KARO'] or player_second_card == ['As TREFL']:
+            if player_total_points == 21:
+                print("Suma twoich punktów to:", player_total_points)
+                print("Masz blackjacka! Sprawdźmy teraz co kryje się pod drugą kartą krupiera!")
+                print("Druga karta krupiera to:", croupier_second_card)
+                print("Suma punktów krupiera to:", croupier_total_points)
+                if croupier_total_points == 21:
+                    print("Jest remis! Pieniądze wracją do ciebie. Nic nie tracisz, ale też nic nie wygrywasz.")
+                else:
+                    print("Pokonałeś krupiera! Wygrałeś", 2* rate, "! Gratulację!")
+                    player_total_money+=3*rate
+            else:
+                player_total_points = player_total_points
+                print("Suma twoich punktów to:", player_total_points)
+        else:
+            player_total_points = player_total_points
+            print("Suma twoich punktów to:", player_total_points)
+
+
+
+#possible actions when croupier's first card is ace - you can buy insurance and be sure that you won't lose your money or you can risk it all
+            if croupier_first_card == ['As KIER'] or croupier_first_card == ['As PIK'] or croupier_first_card == ['As KARO'] or croupier_first_card == ['As TREFL']:
+                choice_of_buying_insurance = input("Czy chcesz wykupić ubezpieczenie? ")
+                if choice_of_buying_insurance == "tak" or choice_of_buying_insurance == "TAK" or choice_of_buying_insurance == "Tak":
+                    print("Jeśli chcesz wykupić ubezpieczenie musić wpłacić połowę swojej początkowej stawki")
+                    value_of_insurance = 0.5 * rate
+                    new_rate = value_of_insurance + rate
+                    player_total_money-=value_of_insurance
+                    print("Stawiasz dodatkowe", value_of_insurance, "złotych")
+                else:
+                    print("Cóż, podejmujesz to ryzyko na własną odpowiedzialnosć. Grajmy dalej!")
+
+
+        while player_total_points<21:
+            print("Przyszedł czas na podjęcie ważnej decyzji!")
+            print("Jeśli chcesz dobrać kolejną kartę wpisz: 'hit'")
+            print("Jeśli nie chcesz dobierać kart wpisz: 'stand'")
+            first_choice_of_move = input()
+            if first_choice_of_move == "hit" or first_choice_of_move == "HIT" or first_choice_of_move == "Hit":
+                player_third_card = random.choice(deck)
+                print("Twoja kolejna karta to:", player_third_card)
+                player_total_points=points(player_third_card,player_total_points)
+                print("Suma twoich punktów to:", player_total_points)
+            elif first_choice_of_move == "stand" or first_choice_of_move == "STAND" or first_choice_of_move == "Stand":
+                if croupier_total_points == 21 and croupier_first_card == ['As KIER'] or croupier_total_points ==21 and croupier_first_card == ['As PIK'] or croupier_total_points == 21 and croupier_first_card == ['As KARO'] or croupier_total_points == 21 and croupier_first_card == ['As TREFL']:
+                    if choice_of_buying_insurance == "tak" or choice_of_buying_insurance == "TAK" or choice_of_buying_insurance == "Tak":
+                        print("Krupier ma BLACKJACKA! Ty na szczęscię wykupiłeś ubezpieczenie, więc nic nie tracisz")
+                        player_total_money+=new_rate
+                    else:
+                        print("Krupier ma BLACKJACKA! Tracisz postawione pieniądze")
+                else:
+                    if croupier_total_points>17:
+                        print("Suma punktów krupiera to:", croupier_total_points)
+                        if croupier_total_points > player_total_points and croupier_total_points <= 21:
+                            print("Krupier wygrywa, tracisz postawione pieniądze.")
+                        elif croupier_total_points > 21:
+                            print("Krupier przgerywa, wygrywasz", 2* rate, "złotych")
+                            player_total_money+=3*rate
+                        elif player_total_points > croupier_total_points:
+                            print("Wygrywasz", 2* rate, "złotych")
+                            player_total_money+=3*rate
+                    else:
+                        while croupier_total_points<17:
+                            print("Krupier dobiera kolejną kartę")
+                            croupier_third_card = random.choice(deck)
+                            print("Trzecia karta krupiera to:", croupier_third_card)
+                            croupier_total_points=points(croupier_third_card,croupier_total_points)
+                            print("Suma punktów krupiera to:", croupier_total_points)
+                            if croupier_total_points > player_total_points and croupier_total_points <= 21:
+                                print("Krupier wygrywa, tracisz postawione pieniądze.")
+                            elif croupier_total_points > 21:
+                                print("Krupier przgerywa, wygrywasz", 2* rate, "złotych")
+                                player_total_money+=3*rate
+
+        else:
+            if player_total_points==21:
+                print("Gratulację, wygrałeś",2*rate,"złotych")
+                player_total_points+=3*rate
+            elif player_total_points>21:
+                print("Przegrałeś")
+            else:
+                print("Koniec gry")
+    elif decyzja=="koniec":
+        break
