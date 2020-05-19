@@ -1,0 +1,118 @@
+import random
+#tworzenie talii
+for k in range(2,11):
+    for i in ["Pik","Trefl","Karo","Kier"]:
+        #k to przypisana liczbie wartosc:)
+        #i to kolor jaki ma
+        if k==11:
+            talia.append(["As",k,i])
+        elif k==10:
+            talia.append([k,k,i])
+            #w tym jednym wyswietla 2xK żebym potem przy ustalaniu na którym miejscu jest parametr wartosci karty nie musiała kombinować z różną długością listy- jestem leniwa :)
+            talia.append(["Jopek",k,i])
+            talia.append(["Król",k,i])
+            talia.append(["Dama",k,i])
+
+        else:
+            talia.append([k,k,i])
+print("Witaj! Oto Blackjack! Let's play the game!")
+while True:
+    print("Jeśli chcesz wyświetlić zasady cudownej gry wcisnij \"q\"")
+    print("Jeśli chcesz rozpocząć grę wciśnij \"w\"")
+    print("Jeśli chcesz zakończyć grę wciśnij \"e\"")
+    print("Jeśli chcesz wyświetlić informacje o autorach wciśnij \"r\"")
+    znak=input()
+    if znak=="q":
+        print("Zadaniem gracza jest uzyskać jak najbliżej (ale nie więcej niż) 21 punktów. Karty od dwójki do dziesiątki mają wartość równą numerowi karty.Walet, Dama i Król mają wartość równą 10 punktów. Gracz stawia zakład używając żetonów. Następnie gracz i krupier dostają po dwie karty. Obydwie karty gracza są odkryte, natomiast tylko jedna karta krupiera jest pokazana graczowi. Gracz teraz może podjąć decyzje o swoim następnym ruchu, ma następujące możliwości: 1)Dobrać kartę (hit).2)Nie dobierać kart (stand).3)Podwoić stawkę (double down), możliwe tylko przy pierwszych dwóch kartach, gracz wtedy dostanie tylko jedną kartę.4)Rozdwoić karty (split), gdy dwie pierwsze karty gracza są tej samej wartości np. dwie ósemki. Gracz wtedy dokłada drugą stawkę (równą wartości pierwszej stawki) i może dobierać karty po rozdwojeniu. ")
+    elif znak=="w":
+        print("Ile żetonów chcesz postawić?:)")
+        liczba_żetonow=int(input())
+        #rozdawanko kart
+        karta1_gracza=random.choice(talia)
+        karta2_gracza=random.choice(talia)
+        talia.remove(karta1_gracza)
+        talia.remove(karta2_gracza)
+        print("Twoje karty to (numer karty,wartość punktowa, kolor):",karta1_gracza,karta2_gracza)
+        karta1_krupiera=random.choice(talia)
+        karta2_krupiera=random.choice(talia)
+        talia.remove(karta1_krupiera)
+        talia.remove(karta2_krupiera)
+        print("Jedna z moich kart to:", karta1_krupiera)
+        suma_gracza=0
+        #te liczby w nawiasach kwadratowych to numer parametru wartość karty w liście
+        suma_gracza=karta1_gracza[1]+karta2_gracza[1]
+        suma_krupiera=0
+        suma_krupiera=karta1_krupiera[1]+karta2_krupiera[1]
+        print("Suma Twoich kart wynosi:", suma_gracza)
+        #kolejne możliwe ruchy gracza
+        while True:
+            #mysle, ze w tym momencie wkroczy to mityczne GUI i gracz bedzie mogl kliknac co wybiera, ale póki co...
+            if suma_gracza>21:
+                print("Przegrałeś:)")
+                break
+            else:
+                print("Jaki jest Twój kolejny ruch? Napisz: 'dobieram', albo 'pasuje', albo 'podwajam', albo 'rozdwajam'")
+                odpowiedz=input()
+                if odpowiedz=="dobieram":
+                    karta3_gracza=random.choice(talia)
+                    talia.remove(karta3_gracza)
+                    suma_gracza+=karta3_gracza[1]
+                    print("Twoja suma wynosi", suma_gracza)
+                elif odpowiedz=="pasuje":
+                    print("Suma Twoich kart to", suma_gracza)
+                    print("Suma kart krupiera to:", suma_krupiera)
+                    if suma_krupiera>21:
+                        print("Wygrałeś :)")
+                    elif suma_krupiera<17:
+                            karta3_krupiera=random.choice(talia)
+                            talia.remove(karta3_krupiera)
+                            suma_krupiera+=karta3_krupiera[1]
+                            if suma_gracza>suma_krupiera:
+                                print("Wygrałeś:)")
+                            else:
+                                print("Przegrana :()")
+
+                elif odpowiedz=="podwajam":
+                    liczba_żetonow+=liczba_żetonow
+                    print("Twoja stawka została podwojona, liczba żetonów wynosi:", liczba_żetonow)
+                    karta3_gracza=random.choice(talia)
+                    talia.remove(karta3_gracza)
+                    suma_gracza+=karta3_gracza[1]
+                    print("Dobrana karta to:", karta3_gracza)
+                    print("Twoja suma wynosi:", suma_gracza)
+                    print("Suma krupiera wynosi:", suma_krupiera)
+                    if suma_krupiera>21:
+                        print("Wygrałeś :)")
+                    elif suma_krupiera<17:
+                            karta3_krupiera=random.choice(talia)
+                            talia.remove(karta3_krupiera)
+                            suma_krupiera+=karta3_krupiera[1]
+                            if suma_gracza>suma_krupiera:
+                                print("Wygrałeś:)")
+                            else:
+                                print("Przegrana :()")
+
+                elif odpowiedz=="rozdwajam":
+                    if karta1_gracza[1]==karta2_gracza[1]:
+                        # tablica_kart_przy_rozdwojeniu=
+                        # karta3_gracza=random.choice(talia)
+                        # talia.remove(karta3_gracza)
+                        # karta4_gracza=random.choice(talia)
+                        # talia.remove(karta4_gracza)
+                        # print("Pierwsza kombinacja kart to:", karta1_gracza,karta3_gracza)
+                        # suma1_przy_rozdwojeniu=karta1_gracza[1]+karta3_gracza[1]
+                        # print("Druga kombinacja kart to:", karta2_gracza,karta4_gracza)
+                        # suma2_przy_rozdwojeniu=karta2_gracza[1]+karta4_gracza[1]
+
+                    else:
+                        print("Przy takiej kombinacji kart rozwiązanie to nie jest możliwe")
+
+                else:
+                    print("Oj! Bardzo nie lubię łamania zasad!")
+
+    elif znak=="e":
+        break
+    elif znak=="r":
+        print("Autorami gry są: X,Y,Z,Q")
+    else:
+        print("Ktoś tu lubi łamać zasady :)")
