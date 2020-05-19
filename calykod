@@ -50,6 +50,8 @@ while True:
             if suma_gracza>21:
                 print("Przegrałeś:)")
                 break
+            elif suma_gracza==21:
+                print("Wygrałeś")
             else:
                 print("Jaki jest Twój kolejny ruch? Napisz: 'dobieram', albo 'pasuje', albo 'podwajam', albo 'rozdwajam'")
                 odpowiedz=input()
@@ -59,17 +61,19 @@ while True:
                     suma_gracza+=karta3_gracza[1]
                     print("Twoja suma wynosi", suma_gracza)
                 elif odpowiedz=="pasuje":
-                    print("Suma Twoich kart to", suma_gracza)
-                    print("Suma kart krupiera to:", suma_krupiera)
+                    print("Nie dobierasz kart")
                     if suma_krupiera>21:
+                        print("Suma Twoich kart", suma_gracza, "Suma krupiera", suma_krupiera)
                         print("Wygrałeś :)")
                     elif suma_krupiera<17:
                             karta3_krupiera=random.choice(talia)
                             talia.remove(karta3_krupiera)
                             suma_krupiera+=karta3_krupiera[1]
                             if suma_gracza>suma_krupiera:
+                                print("Twoja suma", suma_gracza, "Suma krupiera", suma_krupiera)
                                 print("Wygrałeś:)")
                             else:
+                                print("Twoja suma", suma_gracza, "Suma krupiera", suma_krupiera)
                                 print("Przegrana :()")
 
                 elif odpowiedz=="podwajam":
@@ -116,4 +120,3 @@ while True:
         print("Autorami gry są: X,Y,Z,Q")
     else:
         print("Ktoś tu lubi łamać zasady :)")
-
