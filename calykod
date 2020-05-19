@@ -1,5 +1,6 @@
 import random
 #tworzenie talii
+talia=[]
 for k in range(2,11):
     for i in ["Pik","Trefl","Karo","Kier"]:
         #k to przypisana liczbie wartosc:)
@@ -12,7 +13,6 @@ for k in range(2,11):
             talia.append(["Jopek",k,i])
             talia.append(["Król",k,i])
             talia.append(["Dama",k,i])
-
         else:
             talia.append([k,k,i])
 print("Witaj! Oto Blackjack! Let's play the game!")
@@ -93,19 +93,19 @@ while True:
                                 print("Przegrana :()")
 
                 elif odpowiedz=="rozdwajam":
-                    #if karta1_gracza[1]==karta2_gracza[1]:
-                        # tablica_kart_przy_rozdwojeniu=
-                        # karta3_gracza=random.choice(talia)
-                        # talia.remove(karta3_gracza)
-                        # karta4_gracza=random.choice(talia)
-                        # talia.remove(karta4_gracza)
-                        # print("Pierwsza kombinacja kart to:", karta1_gracza,karta3_gracza)
-                        # suma1_przy_rozdwojeniu=karta1_gracza[1]+karta3_gracza[1]
-                        # print("Druga kombinacja kart to:", karta2_gracza,karta4_gracza)
-                        # suma2_przy_rozdwojeniu=karta2_gracza[1]+karta4_gracza[1]
-
-                    #else:
-                        #print("Przy takiej kombinacji kart rozwiązanie to nie jest możliwe")
+                    # if karta1_gracza[1]==karta2_gracza[1]:
+                    #     tablica_kart_przy_rozdwojeniu=
+                    #     karta3_gracza=random.choice(talia)
+                    #     talia.remove(karta3_gracza)
+                    #     karta4_gracza=random.choice(talia)
+                    #     talia.remove(karta4_gracza)
+                    #     print("Pierwsza kombinacja kart to:", karta1_gracza,karta3_gracza)
+                    #     suma1_przy_rozdwojeniu=karta1_gracza[1]+karta3_gracza[1]
+                    #     print("Druga kombinacja kart to:", karta2_gracza,karta4_gracza)
+                    #     suma2_przy_rozdwojeniu=karta2_gracza[1]+karta4_gracza[1]
+                    #
+                    # else:
+                        print("Przy takiej kombinacji kart rozwiązanie to nie jest możliwe")
 
                 else:
                     print("Oj! Bardzo nie lubię łamania zasad!")
@@ -116,3 +116,4 @@ while True:
         print("Autorami gry są: X,Y,Z,Q")
     else:
         print("Ktoś tu lubi łamać zasady :)")
+
