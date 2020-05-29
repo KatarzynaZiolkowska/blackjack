@@ -10,9 +10,9 @@ okno.geometry("800x500")
 #photo=PhotoImage(file="wstawić ścieżkę pliku?".gif)
 #Label(root, image=photo, bg="pink").pack() - żeby umieścić obrazek w oknie trzeba dodać etykietę
 
-imie=Entry(okno, width=20).grid(row=1)
-imie.insert(0, "Wprowadź swoje imię: ") # w polu tekstowym się wyświetli polecenie
-imie.get()
+# imie=Entry(okno, width=20).grid(row=1)
+# imie.insert(0, "Wprowadź swoje imię: ") # w polu tekstowym się wyświetli polecenie
+# imie.get()
 
 def imie_uzytkownika():
     hello="Hello " + imie.get()
@@ -21,7 +21,12 @@ def imie_uzytkownika():
 przyciski_0=Button(okno, text="Witaj", command=imie_uzytkownika).grid(row=2)
 
 def akcja_przycisk_1():
-    messagebox.showinfo("Okno powitalne","Zaczynamy! Będę Twoim krupierem :)")
+    #messagebox.showinfo("Okno powitalne","Zaczynamy! Będę Twoim krupierem :)")
+    drugie_okno = Tk()
+    drugie_okno.title("Rozgrywka")
+    drugie_okno.geometry("800x500")
+    opis_drugiego_pl =Label(drugie_okno, text = "Zagrajmy!", fg = "black")
+    #po wybraniu opcji:zagraj otwiera się nowe okno, w którym będzie mogła się toczyć rozgrywka
 
 przycisk_1=Button(okno, text="Zagraj", bg="red", fg="white", font="none 15 bold", command=akcja_przycisk_1).grid(row=3,column=1)
 
