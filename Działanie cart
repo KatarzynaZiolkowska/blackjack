@@ -1,0 +1,39 @@
+import os
+import random
+
+#tworzymy listę wszystkich plików w folderze
+deck = os.listdir()
+wylosowana=random.choice(deck)
+#używamy pierwszej litery pliku do rozpoznania karty (dlatego też dobrze by było, żeby w folderze nie znajdowały się żadne inne pliki zaczynające się na cyfry, bądź A,K,J,Q)
+symbol_wylosowana=wylosowana[0]
+
+player_total_points=0
+
+def points(karta,ppoints):
+    player_total_points=ppoints
+    if karta=="2":
+        player_total_points += 2
+    elif karta=="3":
+        player_total_points += 3
+    elif karta=="4":
+        player_total_points += 4
+    elif karta=="5":
+        player_total_points += 5
+    elif karta=="6":
+        player_total_points += 6
+    elif karta=="7":
+        player_total_points += 7
+    elif karta=="8":
+        player_total_points += 8
+    elif karta=="9":
+        player_total_points +=9
+    elif karta=="A":
+        player_total_points += 11
+        if player_total_points > 21:
+            player_total_points = player_total_points -10
+        else:
+            player_total_points = player_total_points
+    elif karta=="J" or karta=="K" or karta=="Q" or karta=="1":
+        player_total_points +=10
+
+    return player_total_points
