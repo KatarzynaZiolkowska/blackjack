@@ -1,0 +1,58 @@
+import os
+import random
+from tkinter import *
+from tkinter import messagebox
+import tkinter as tk
+from PIL import Image , ImageTk
+
+okno = tk.Tk() #to open the window (ważne! Tk zamiast tk)
+okno.title("BLACKJACK")
+okno.geometry("800x500")
+okno.config(bg='green')
+
+
+def akcja_przycisk_1():
+
+    global img
+    img = tk.PhotoImage(file = los(deck))
+    img = img.subsample(6)
+    label = tk.Label(okno, image=img)
+    label.place(x=100,y=50)
+    global img2
+    img2 = tk.PhotoImage(file = los(deck))
+    img2 = img2.subsample(6)
+    label = tk.Label(okno, image=img2)
+    label.place(x=300,y=50)
+
+def akcja_przycisk_2():
+    messagebox.showinfo("Zasady","Celem gry jest pokonać krupiera poprzez uzyskanie sumy jak najbliższej 21 punktów w kartach, jednak nie przekraczając 21. Gracz stawia zakład na specjalnym stole używając żetonów. Następnie gracz i krupier dostają po dwie karty. Obydwie karty gracza są odkryte, natomiast tylko jedna karta krupiera jest pokazana graczowi\nPUNKTACJA KART:\nKarty od dwójki do dziesiątki mają wartość równą numerowi karty.\nWalet, Dama i Król mają wartość równą 10 punktów.\nAs ma wartość równą 1 lub 11, w zależności co jest lepsze dla gracza.\nMOŻLIWOŚCI RUCHU\nW swojej turze możesz:\n1) Dobrać kartę (hit)\n2) Nie dobierać kart (stand)\n3) Podwoić stawkę (double down)\n4) Rozdwoić karty (split)")
+
+def akcja_przycisk_4():
+    messagebox.showinfo("Autorki programu","Łzy, krew i pot wylały:\nAnna Cichocka\nAnna Kołodziejczyk\nKatarzyna Ziółkowska\nSylwia Leśniewska")
+
+
+#tworzymy listę wszystkich plików w folderze
+deck = os.listdir()
+deck.remove("dużyprojektgui.py")
+deck.remove("gujuuju.py")
+def los(deck):
+    wylosowana=random.choice(deck)
+    return wylosowana
+
+#używamy pierwszej litery pliku do rozpoznania karty (dlatego też dobrze by było, żeby w folderze znajdowały)
+def p_litera(wylosowana):
+    symbol_wylosowana=wylosowana[0]
+
+przycisk_1=Button(okno, text="Zagraj", bg="red", fg="white", font="none 15 bold", command=akcja_przycisk_1)
+przycisk_1.place(x=0,y=0)
+
+przycisk_2=Button(okno, text="Zasady", bg="blue", fg="white", font="none 15 bold", command=akcja_przycisk_2)
+przycisk_2.place(x=75,y=0)
+
+przycisk_3=Button(okno, text="Wyjdź z programu", bg="yellow", fg="black", font="none 15 bold", command=okno.quit)
+przycisk_3.place(x=160,y=0)
+
+przycisk_4=Button(okno, text="Autorki", bg="orange", fg="black", font="none 15 bold", command=akcja_przycisk_4)
+przycisk_4.place(x=348,y=0)
+
+okno.mainloop()
