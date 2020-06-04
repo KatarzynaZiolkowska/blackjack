@@ -5,24 +5,55 @@ from tkinter import messagebox
 import tkinter as tk
 from PIL import Image , ImageTk
 
+
 okno = tk.Tk() #to open the window (ważne! Tk zamiast tk)
 okno.title("BLACKJACK")
 okno.geometry("800x500")
 okno.config(bg='green')
-
+gracz=[]
+krupier=[]
 
 def akcja_przycisk_1():
 
     global img
-    img = tk.PhotoImage(file = los(deck))
+    global los1
+    los1=los(deck)
+    img = tk.PhotoImage(file = los1)
     img = img.subsample(6)
     label = tk.Label(okno, image=img)
-    label.place(x=100,y=50)
+    label.place(x=100,y=300)
+    gracz.append(los1)
     global img2
-    img2 = tk.PhotoImage(file = los(deck))
+    global los2
+    los2=los(deck)
+    img2 = tk.PhotoImage(file = los2)
     img2 = img2.subsample(6)
     label = tk.Label(okno, image=img2)
-    label.place(x=300,y=50)
+    label.place(x=175,y=300)
+    gracz.append(los2)
+    global img3
+    global los3
+    los3=los(deck)
+    img3 = tk.PhotoImage(file = los3)
+    img3 = img3.subsample(6)
+    label = tk.Label(okno, image=img3)
+    label.place(x=600,y=60)
+    krupier.append(los3)
+    global img5
+    img5 = tk.PhotoImage(file = "purple_back.png")
+    img5 = img5.subsample(6)
+    label = tk.Label(okno, image=img5)
+    label.place(x=600,y=60)
+    global img4
+    global los4
+    los4=los(deck)
+    img4 = tk.PhotoImage(file = los4)
+    img4 = img4.subsample(6)
+    label = tk.Label(okno, image=img4)
+    label.place(x=525,y=60)
+    krupier.append(los4)
+
+
 
 def akcja_przycisk_2():
     messagebox.showinfo("Zasady","Celem gry jest pokonać krupiera poprzez uzyskanie sumy jak najbliższej 21 punktów w kartach, jednak nie przekraczając 21. Gracz stawia zakład na specjalnym stole używając żetonów. Następnie gracz i krupier dostają po dwie karty. Obydwie karty gracza są odkryte, natomiast tylko jedna karta krupiera jest pokazana graczowi\nPUNKTACJA KART:\nKarty od dwójki do dziesiątki mają wartość równą numerowi karty.\nWalet, Dama i Król mają wartość równą 10 punktów.\nAs ma wartość równą 1 lub 11, w zależności co jest lepsze dla gracza.\nMOŻLIWOŚCI RUCHU\nW swojej turze możesz:\n1) Dobrać kartę (hit)\n2) Nie dobierać kart (stand)\n3) Podwoić stawkę (double down)\n4) Rozdwoić karty (split)")
@@ -30,11 +61,14 @@ def akcja_przycisk_2():
 def akcja_przycisk_4():
     messagebox.showinfo("Autorki programu","Łzy, krew i pot wylały:\nAnna Cichocka\nAnna Kołodziejczyk\nKatarzyna Ziółkowska\nSylwia Leśniewska")
 
+# def bankrut():
+#     messagebox.showinfo("Zbankrutowałeś,koniec gry")
 
 #tworzymy listę wszystkich plików w folderze
 deck = os.listdir()
 deck.remove("dużyprojektgui.py")
 deck.remove("gujuuju.py")
+deck.remove("purple_back.png")
 def los(deck):
     wylosowana=random.choice(deck)
     return wylosowana
@@ -42,6 +76,7 @@ def los(deck):
 #używamy pierwszej litery pliku do rozpoznania karty (dlatego też dobrze by było, żeby w folderze znajdowały)
 def p_litera(wylosowana):
     symbol_wylosowana=wylosowana[0]
+    return symbol_wylosowana
 
 przycisk_1=Button(okno, text="Zagraj", bg="red", fg="white", font="none 15 bold", command=akcja_przycisk_1)
 przycisk_1.place(x=0,y=0)
@@ -56,3 +91,43 @@ przycisk_4=Button(okno, text="Autorki", bg="orange", fg="black", font="none 15 b
 przycisk_4.place(x=348,y=0)
 
 okno.mainloop()
+
+def points(karta,ppoints):
+    player_total_points=ppoints
+    if karta=="2":
+        player_total_points += 2
+    elif karta=="3":
+        player_total_points += 3
+    elif karta=="4":
+        player_total_points += 4
+    elif karta=="5":
+        player_total_points += 5
+    elif karta=="6":
+        player_total_points += 6
+    elif karta=="7":
+        player_total_points += 7
+    elif karta=="8":
+        player_total_points += 8
+    elif karta=="9":
+        player_total_points +=9
+    elif karta=="A":
+        player_total_points += 11
+        if player_total_points > 21:
+            player_total_points = player_total_points -10
+        else:
+            player_total_points = player_total_points
+    elif karta=="J" or karta=="K" or karta=="Q" or karta=="1":
+        player_total_points +=10
+
+    return player_total_points
+
+
+
+player_total_points=0
+player_total_money=50
+
+for i in range(len(gracz)):
+    player_total_points+=points(p_litera(gracz[i]),player_total_points)
+    # player_total_points-=points(p_litera(lista[i]),player_total_points)
+
+print(player_total_points)
