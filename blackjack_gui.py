@@ -24,27 +24,6 @@ player_total_points=0
 croupier_total_points = 0
 player_total_money=50
 
-def punkty():
-    points(p_litera(los1))
-    points(p_litera(los2))
-    points(p_litera(los0))
-    points(p_litera(los01))
-    points(p_litera(los02))
-    points(p_litera(los03))
-    points2(p_litera(los3))
-    points2(p_litera(los4))
-    points2(p_litera(los5))
-    points2(p_litera(los6))
-    if player_total_points >21 or croupier_total_points > player_total_points and croupier_total_points <21:
-        wynik = Label(okno, text = "Przegrałeś")
-        wynik.place(x =600, y = 300)
-    elif player_total_points == 21 and croupier_total_points !=21:
-         wynik = Label(okno, text = "Masz blakcjacka! Gratulacje")
-         wynik.place(x =600, y = 300)
-    elif croupier_total_points >21 or player_total_points > croupier_total_points and player_total_points <21:
-         wynik = Label(okno, text = "Wygrałeś! Gratulacje")
-         wynik.place(x =600, y = 300)
-   
 
 def akcja_karta():
     global img0
@@ -59,6 +38,7 @@ def akcja_karta():
     przycisk2.config(state = tk.DISABLED)
     global przycisk1_1
     global przycisk2_1
+    points(p_litera(los0))
     przycisk1_1 = Button(okno, text = "Dobierz kartę", bg="black", fg="white", command = akcja_karta2)
     przycisk1_1.place(x=0,y=50)
     przycisk2_1 = Button(okno, text = "Nie dobieraj", bg="black", fg="white", command= akcja_karta_k1)
@@ -77,10 +57,12 @@ def akcja_karta2():
     przycisk2_1.config(state = tk.DISABLED)
     global przycisk1_2
     global przycisk2_2
+    points(p_litera(los01))
     przycisk1_2 = Button(okno, text = "Dobierz kartę", bg="black", fg="white", command = akcja_karta3)
     przycisk1_2.place(x=0,y=50)
     przycisk2_2 = Button(okno, text = "Nie dobieraj", bg="black", fg="white", command= akcja_karta_k1)
     przycisk2_2.place(x=0,y=80)
+
 
 
 def akcja_karta3():
@@ -96,10 +78,12 @@ def akcja_karta3():
     przycisk2_2.config(state = tk.DISABLED)
     global przycisk1_3
     global przycisk2_3
+    points(p_litera(los02))
     przycisk1_3 = Button(okno, text = "Dobierz kartę", bg="black", fg="white", command = akcja_karta4)
     przycisk1_3.place(x=0,y=50)
     przycisk2_3 = Button(okno, text = "Nie dobieraj", bg="black", fg="white", command= akcja_karta_k1)
     przycisk2_3.place(x=0,y=80)
+
 
 def akcja_karta4():
     global img03
@@ -112,6 +96,7 @@ def akcja_karta4():
     gracz.append(los03)
     przycisk1_3.config(state = tk.DISABLED)
     przycisk2_3.config(state = tk.DISABLED)
+    points(p_litera(los03))
     akcja_karta_k1()
 
 
@@ -124,6 +109,7 @@ def akcja_karta_k1():
     label = tk.Label(okno, image=img4)
     label.place(x=450,y=60)
     krupier.append(los4)
+    points2(p_litera(los4))
     if croupier_total_points < 17:
         akcja_karta_k2()
     elif croupier_total_points >= 17:
@@ -138,6 +124,7 @@ def akcja_karta_k2():
     label = tk.Label(okno, image=img5)
     label.place(x=525,y=60)
     krupier.append(los5)
+    points2(p_litera(los5))
     if croupier_total_points < 17:
         akcja_karta_k3()
     elif croupier_total_points >= 17:
@@ -152,11 +139,21 @@ def akcja_karta_k3():
     label = tk.Label(okno, image=img6)
     label.place(x=600,y=60)
     krupier.append(los6)
+    points2(p_litera(los6))
     liczenie_punktow()
 
 def liczenie_punktow():
-    punkty()
-  
+    print(player_total_points, croupier_total_points)
+    if player_total_points >21 or croupier_total_points > player_total_points and croupier_total_points <21:
+        wynik = Label(okno, text = "Przegrałeś.", bg="blue", fg="black", font="none 15 bold")
+        wynik.place(x =550, y = 300)
+    elif player_total_points == 21 and croupier_total_points !=21:
+         wynik = Label(okno, text = "Masz blakcjacka! Gratulacje!", bg="blue", fg="black", font="none 15 bold")
+         wynik.place(x =550, y = 300)
+    elif croupier_total_points >21 or player_total_points > croupier_total_points and player_total_points <21:
+         wynik = Label(okno, text = "Wygrałeś! Gratulacje!", bg="blue", fg="black", font="none 15 bold")
+         wynik.place(x =550, y = 300)
+
 def akcja_przycisk_1():
 
     global img
@@ -195,6 +192,9 @@ def akcja_przycisk_1():
     przycisk1.place(x=0,y=50)
     przycisk2 = Button(okno, text = "Nie dobieraj", bg="black", fg="white", command= akcja_karta_k1)
     przycisk2.place(x=0,y=80)
+    points(p_litera(los1))
+    points(p_litera(los2))
+    points2(p_litera(los3))
 
 
 def akcja_przycisk_2():
@@ -202,7 +202,6 @@ def akcja_przycisk_2():
 
 def akcja_przycisk_4():
     messagebox.showinfo("Autorki programu","Łzy, krew i pot wylały:\nAnna Cichocka\nAnna Kołodziejczyk\nKatarzyna Ziółkowska\nSylwia Leśniewska")
-
 
 
 #tworzymy listę wszystkich plików w folderze
@@ -293,8 +292,6 @@ def points2(karta):
 
     return croupier_total_points
 
+
 okno.mainloop()
 
-
-print(player_total_points)
-print(croupier_total_points)
