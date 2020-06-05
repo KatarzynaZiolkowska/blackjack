@@ -22,6 +22,7 @@ croupier_card4 = "0"
 player_total_points=0
 croupier_total_points = 0
 player_total_money=50
+money_on_the_table=0
 
 
 def deal_of_cards():    #Ta funkcja zadziała po naciśnięciu przycisku:Zagraj i rozda po dwie karty graczowi i krupierowi(jedna karta krupiera będzie zakryta).
@@ -80,6 +81,7 @@ def deal_of_cards():    #Ta funkcja zadziała po naciśnięciu przycisku:Zagraj 
         result = Label(window, text = "Masz blakcjacka! Gratulacje!", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
         restart.config(state = tk.NORMAL)
+        win_rate(3)
 
 
  #Teraz rozpisane zostaną funkcje pozwalające graczowi na dobieranie kolejnych kart i doliczanie ich wartości do łącznej liczby punktów gracza
@@ -109,6 +111,8 @@ def picking_card_player1(): # To jest funkcja, która dobiera pierwszą kartę d
         result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
         restart.config(state = tk.NORMAL)
+        win_rate(2)
+
 
 def picking_card_player2():  # To jest funkcja, która dobiera drugą kartę dla gracza
     global image8
@@ -136,6 +140,7 @@ def picking_card_player2():  # To jest funkcja, która dobiera drugą kartę dla
         result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
         restart.config(state = tk.NORMAL)
+        win_rate(2)
 
 
 def picking_card_player3():   # To jest funkcja, która dobiera trzecią kartę dla gracza
@@ -164,6 +169,7 @@ def picking_card_player3():   # To jest funkcja, która dobiera trzecią kartę 
         result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
         restart.config(state = tk.NORMAL)
+        win_rate(2)
 
 
 def picking_card_player4():  # To jest funkcja, która dobiera czwartą kartę dla gracza
@@ -185,6 +191,7 @@ def picking_card_player4():  # To jest funkcja, która dobiera czwartą kartę d
         result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
         restart.config(state = tk.NORMAL)
+        win_rate(2)
 
 
 
@@ -209,6 +216,7 @@ def picking_card_croupier1():  #To jest funkcja, która odkrywa zakrytą kartę 
         result = Label(window, text = "Krupier ma blackjacka. Przegrałeś.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
         restart.config(state = tk.NORMAL)
+        win_rate(2)
     elif croupier_total_points >= 17 and croupier_total_points!=21:
         points_counting()
 
@@ -246,34 +254,43 @@ def picking_card_croupier3():  #To jest funkcja, która dobiera drugą kartę, k
 def printing_points():  #Ta funkcja służy do wyświetlania punktów gracza i krupiera
     player_points = "Masz: " + str(player_total_points) + " punktów."
     croupier_points = "Krupier ma: " + str(croupier_total_points) + " punktów"
+    rate= "Twoja stawka to: " + str(money_on_the_table) + " zł"
     frame = Label(window, text =player_points, bg="white", fg="black", font="none 15 bold")
     frame.place(x =550, y = 250)
     frame = Label(window, text = croupier_points, bg="white", fg="black", font="none 15 bold")
     frame.place(x =550, y = 300)
+    frame = Label(window, text = rate, bg="white", fg="black", font="none 15 bold")
+    frame.place(x =550, y = 400)
 
 
 def points_counting(): #Ta funkcja pozwala na podsumowanie otrzymanych punktów i wyświetlenie wyniku
     if player_total_points >21 or croupier_total_points > player_total_points and croupier_total_points <21:
         result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
+        win_rate(2)
     elif player_total_points == 21 and croupier_total_points !=21:
         result = Label(window, text = "Wygrałeś! Gratulacje!", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
+        win_rate(1)
     elif croupier_total_points == 21 and player_total_points != 21:
         result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
+        win_rate(2)
     elif player_total_points ==21 and croupier_total_points ==21:
         result = Label(window, text = "Jest remis. Nie tracisz i nie zyskujesz.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
+        win_rate(4)
     elif croupier_total_points >21 or player_total_points > croupier_total_points and player_total_points <21:
         result = Label(window, text = "Wygrałeś! Gratulacje!", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
+        win_rate(1)
     elif player_total_points == croupier_total_points:
         result = Label(window, text = "Jest remis. Nie tracisz i nie zyskujesz.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
+        win_rate(4)
     restart.config(state = tk.NORMAL)
-
-#teraz funkcje pieniężne
+    
+    
 def stawka_disable():
     five.config(state = tk.DISABLED)
     ten.config(state = tk.DISABLED)
@@ -283,35 +300,73 @@ def stawka_disable():
     fifty.config(state = tk.DISABLED)
     ok.config(state = tk.NORMAL)
     deal_of_cards()
+    
+def win_rate(number):
+    #normalna wygrana
+    if number==1:
+        final_rate = Label(window, text = "Wygrałeś stawkę "+str(money_on_the_table)+" zł", bg="white", fg="black", font="none 15 bold")
+        final_rate.place(x =550, y = 400)
+        final_money = Label(window, text = "Masz teraz łącznie "+str(player_total_money+money_on_the_table*2)+" zł", bg="white", fg="black", font="none 15 bold")
+        final_money.place(x =550, y = 450)
+    #Przegrana
+    elif number==2:
+        final_rate = Label(window, text = "Przegrałeś stawkę "+str(money_on_the_table)+" zł", bg="white", fg="black", font="none 15 bold")
+        final_rate.place(x =550, y = 400)
+        final_money = Label(window, text = "Masz teraz łącznie "+str(player_total_money)+" zł", bg="white", fg="black", font="none 15 bold")
+        final_money.place(x =550, y = 450)
+    #blackjack
+    elif number==3:
+        final_rate = Label(window, text = "Wygrałeś 1,5x stawki "+str(money_on_the_table*1,5)+" zł", bg="white", fg="black", font="none 15 bold")
+        final_rate.place(x =550, y = 400)
+        final_money = Label(window, text = "Masz teraz łącznie "+str(player_total_money+money_on_the_table*2,5)+" zł", bg="white", fg="black", font="none 15 bold")
+        final_money.place(x =550, y = 450)
+    elif number==2:
+        final_rate = Label(window, text = "Stawkę "+str(money_on_the_table)+" zł, wraca", bg="white", fg="black", font="none 15 bold")
+        final_rate.place(x =550, y = 400)
+        final_money = Label(window, text = "Masz teraz łącznie "+str(player_total_money+money_on_the_table)+" zł", bg="white", fg="black", font="none 15 bold")
+        final_money.place(x =550, y = 450)
 
+#teraz funkcje pieniężne
 def stawka5():
     global player_total_money
+    global money_on_the_table
     player_total_money-=5
+    money_on_the_table+=5
     stawka_disable()
 
 def stawka10():
     global player_total_money
+    global money_on_the_table
     player_total_money-=10
+    money_on_the_table+=10
     stawka_disable()
 
 def stawka20():
     global player_total_money
+    global money_on_the_table
     player_total_money-=20
+    money_on_the_table+=20
     stawka_disable()
 
 def stawka30():
     global player_total_money
+    global money_on_the_table
     player_total_money-=30
+    money_on_the_table+=30
     stawka_disable()
 
 def stawka40():
     global player_total_money
+    global money_on_the_table
     player_total_money-=40
+    money_on_the_table+=40
     stawka_disable()
 
 def stawka50():
     global player_total_money
+    global money_on_the_table
     player_total_money-=50
+    money_on_the_table+=50
     stawka_disable()
 
 def messageWindow():
