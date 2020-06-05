@@ -223,6 +223,8 @@ def picking_card_croupier1():  #To jest funkcja, która odkrywa zakrytą kartę 
     global image5
     global croupier_card2
     double_rate.destroy()
+    button1.config(state=tk.DISABLED)
+    button2.config(state=tk.DISABLED)
     croupier_card2=los(deck)
     image5 = tk.PhotoImage(file = croupier_card2)
     image5 = image5.subsample(6)
@@ -270,19 +272,56 @@ def picking_card_croupier3():  #To jest funkcja, która dobiera drugą kartę, k
     croupier.append(croupier_card4)
     points2(first_letter(croupier_card4))
     printing_points()
+    if croupier_total_points < 17:
+        picking_card_croupier4()
+    elif croupier_total_points >= 17:
+        points_counting()
+
+def picking_card_croupier4():  #To jest funkcja, która dobiera trzecią kartę, krupiera.
+    global image8
+    global croupier_card5
+    croupier_card5=los(deck)
+    image8 = tk.PhotoImage(file = croupier_card5)
+    image8 = image8.subsample(6)
+    label = tk.Label(window, image=image8)
+    label.place(x=630,y=60)
+    croupier.append(croupier_card5)
+    points2(first_letter(croupier_card5))
+    printing_points()
+    if croupier_total_points < 17:
+        picking_card_croupier5()
+    elif croupier_total_points >= 17:
+        points_counting()
+
+
+def picking_card_croupier5():  #To jest funkcja, która dobiera czwartą kartę, krupiera.
+    global image10
+    global croupier_card6
+    croupier_card6=los(deck)
+    image10 = tk.PhotoImage(file = croupier_card6)
+    image10 = image10.subsample(6)
+    label = tk.Label(window, image=image10)
+    label.place(x=660,y=60)
+    croupier.append(croupier_card6)
+    points2(first_letter(croupier_card6))
+    printing_points()
+    if croupier_total_points < 17:
+        picking_card_croupier6()
+    elif croupier_total_points >= 17:
+        points_counting()
+
+def picking_card_croupier6():  #To jest funkcja, która dobiera piątą kartę, krupiera.
+    global image12
+    global croupier_card7
+    croupier_card7=los(deck)
+    image12 = tk.PhotoImage(file = croupier_card7)
+    image12 = image12.subsample(6)
+    label = tk.Label(window, image=image12)
+    label.place(x=685,y=60)
+    croupier.append(croupier_card7)
+    points2(first_letter(croupier_card7))
+    printing_points()
     points_counting()
-
-
-def printing_points():  #Ta funkcja służy do wyświetlania punktów gracza i krupiera
-    player_points = "Masz: " + str(player_total_points) + " punktów."
-    croupier_points = "Krupier ma: " + str(croupier_total_points) + " punktów"
-    rate= "Twoja stawka to: " + str(money_on_the_table) + " zł"
-    frame = Label(window, text =player_points, bg="white", fg="black", font="none 15 bold")
-    frame.place(x =550, y = 250)
-    frame = Label(window, text = croupier_points, bg="white", fg="black", font="none 15 bold")
-    frame.place(x =550, y = 300)
-    frame = Label(window, text = rate, bg="white", fg="black", font="none 15 bold")
-    frame.place(x =550, y = 400)
 
 
 def points_counting(): #Ta funkcja pozwala na podsumowanie otrzymanych punktów i wyświetlenie wyniku
@@ -350,7 +389,7 @@ def win_rate(number):
         bj=money_on_the_table*1.5
         final_rate = Label(window, text = "Wygrałeś 1,5x stawki "+str(bj)+" zł", bg="white", fg="black", font="none 15 bold")
         final_rate.place(x =550, y = 400)
-        new_money=player_total_money+money_on_the_table*2,5
+        new_money=player_total_money+money_on_the_table*2.5
         final_money = Label(window, text = "Masz teraz łącznie "+str(new_money)+" zł", bg="white", fg="black", font="none 15 bold")
         final_money.place(x =550, y = 450)
     elif number==2:
