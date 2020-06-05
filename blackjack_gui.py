@@ -310,18 +310,6 @@ def picking_card_croupier5():  #To jest funkcja, która dobiera czwartą kartę,
     elif croupier_total_points >= 17:
         points_counting()
 
-def picking_card_croupier6():  #To jest funkcja, która dobiera piątą kartę, krupiera.
-    global image12
-    global croupier_card7
-    croupier_card7=los(deck)
-    image12 = tk.PhotoImage(file = croupier_card7)
-    image12 = image12.subsample(6)
-    label = tk.Label(window, image=image12)
-    label.place(x=685,y=60)
-    croupier.append(croupier_card7)
-    points2(first_letter(croupier_card7))
-    printing_points()
-    points_counting()
 
 
 def points_counting(): #Ta funkcja pozwala na podsumowanie otrzymanych punktów i wyświetlenie wyniku
