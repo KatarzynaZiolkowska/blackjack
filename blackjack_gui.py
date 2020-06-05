@@ -25,7 +25,11 @@ player_total_money=50
 
 
 def deal_of_cards():    #Ta funkcja zadziała po naciśnięciu przycisku:Zagraj i rozda po dwie karty graczowi i krupierowi(jedna karta krupiera będzie zakryta).
-
+    player_field = Label(window, text ="Karty gracza:", bg="white", fg="green", font="none 10 bold")
+    player_field.place(x= 20, y = 270)
+    croupier_field = Label(window, text ="Karty krupiera:", bg="white", fg="green", font="none 10 bold")
+    croupier_field.place(x= 250, y = 50)
+    
     global image1
     global players_card1
     players_card1=los(deck)
@@ -76,8 +80,6 @@ def deal_of_cards():    #Ta funkcja zadziała po naciśnięciu przycisku:Zagraj 
         result = Label(window, text = "Masz blakcjacka! Gratulacje!", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
         restart.config(state = tk.NORMAL)
-
-
 
 
  #Teraz rozpisane zostaną funkcje pozwalające graczowi na dobieranie kolejnych kart i doliczanie ich wartości do łącznej liczby punktów gracza
@@ -257,11 +259,17 @@ def points_counting(): #Ta funkcja pozwala na podsumowanie otrzymanych punktów 
     elif player_total_points == 21 and croupier_total_points !=21:
         result = Label(window, text = "Wygrałeś! Gratulacje!", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
+    elif croupier_total_points == 21 and player_total_points != 21:
+        result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
+        result.place(x =550, y = 350)
     elif player_total_points ==21 and croupier_total_points ==21:
         result = Label(window, text = "Jest remis. Nie tracisz i nie zyskujesz.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
     elif croupier_total_points >21 or player_total_points > croupier_total_points and player_total_points <21:
         result = Label(window, text = "Wygrałeś! Gratulacje!", bg="white", fg="black", font="none 15 bold")
+        result.place(x =550, y = 350)
+    elif player_total_points == croupier_total_points:
+        result = Label(window, text = "Jest remis. Nie tracisz i nie zyskujesz.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
     restart.config(state = tk.NORMAL)
 
