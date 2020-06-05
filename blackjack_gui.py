@@ -1,4 +1,3 @@
-
 import os
 import random
 from tkinter import *
@@ -6,7 +5,7 @@ from tkinter import messagebox
 import tkinter as tk
 from PIL import Image , ImageTk
 
-window = tk.Tk()
+window = tk.Tk() #to open the window (ważne! Tk zamiast tk)
 window.title("BLACKJACK")
 window.geometry("800x500")
 window.config(bg='green')
@@ -61,15 +60,24 @@ def deal_of_cards():    #Ta funkcja zadziała po naciśnięciu przycisku:Zagraj 
     label.place(x=450,y=60)
     play_button.config(state = tk.DISABLED)
 
-    global button1 #Tu powstają przyciski które pozwalają graczowi na podjęcie decyzji czy dobiera kartę, czy też nie dobiera
-    global button2
-    button1 = Button(window, text = "Dobierz kartę", bg="black", fg="white", command = picking_card_player1)
-    button1.place(x=0,y=50)
-    button2 = Button(window, text = "Nie dobieraj", bg="black", fg="white", command= picking_card_croupier1)
-    button2.place(x=0,y=95)
     points(first_letter(players_card1))
     points(first_letter(players_card2))
     points2(first_letter(croupier_card1))
+    printing_points()
+
+    global button1 #Tu powstają przyciski które pozwalają graczowi na podjęcie decyzji czy dobiera kartę, czy też nie dobiera
+    global button2
+    if player_total_points <21:
+        button1 = Button(window, text = "Dobierz kartę", bg="black", fg="white", command = picking_card_player1)
+        button1.place(x=0,y=50)
+        button2 = Button(window, text = "Nie dobieraj", bg="black", fg="white", command= picking_card_croupier1)
+        button2.place(x=0,y=80)
+    elif player_total_points ==21:
+        result = Label(window, text = "Masz blakcjacka! Gratulacje!", bg="white", fg="black", font="none 15 bold")
+        result.place(x =550, y = 350)
+
+
+
 
  #Teraz rozpisane zostaną funkcje pozwalające graczowi na dobieranie kolejnych kart i doliczanie ich wartości do łącznej liczby punktów gracza
 def picking_card_player1(): # To jest funkcja, która dobiera pierwszą kartę dla gracza
@@ -86,10 +94,17 @@ def picking_card_player1(): # To jest funkcja, która dobiera pierwszą kartę d
     global button1_1
     global button2_1
     points(first_letter(players_card3))
-    button1_1 = Button(window, text = "Dobierz kartę", bg="black", fg="white", command = picking_card_player2)
-    button1_1.place(x=0,y=50)
-    button2_1 = Button(window, text = "Nie dobieraj", bg="black", fg="white", command= picking_card_croupier1)
-    button2_1.place(x=0,y=95)
+    printing_points()
+    if player_total_points <21:
+        button1_1 = Button(window, text = "Dobierz kartę", bg="black", fg="white", command = picking_card_player2)
+        button1_1.place(x=0,y=50)
+        button2_1 = Button(window, text = "Nie dobieraj", bg="black", fg="white", command= picking_card_croupier1)
+        button2_1.place(x=0,y=80)
+    elif player_total_points ==21:
+        picking_card_croupier1()
+    elif player_total_points >21:
+        result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
+        result.place(x =550, y = 350)
 
 def picking_card_player2():  # To jest funkcja, która dobiera drugą kartę dla gracza
     global image8
@@ -105,10 +120,17 @@ def picking_card_player2():  # To jest funkcja, która dobiera drugą kartę dla
     global button1_2
     global button2_2
     points(first_letter(players_card4))
-    button1_2 = Button(window, text = "Dobierz kartę", bg="black", fg="white", command = picking_card_player3)
-    button1_2.place(x=0,y=50)
-    button2_2 = Button(window, text = "Nie dobieraj", bg="black", fg="white", command= picking_card_croupier1)
-    button2_2.place(x=0,y=95)
+    printing_points()
+    if player_total_points <21:
+        button1_2 = Button(window, text = "Dobierz kartę", bg="black", fg="white", command = picking_card_player3)
+        button1_2.place(x=0,y=50)
+        button2_2 = Button(window, text = "Nie dobieraj", bg="black", fg="white", command= picking_card_croupier1)
+        button2_2.place(x=0,y=80)
+    elif player_total_points ==21:
+        picking_card_croupier1()
+    elif player_total_points >21:
+        result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
+        result.place(x =550, y = 350)
 
 
 def picking_card_player3():   # To jest funkcja, która dobiera trzecią kartę dla gracza
@@ -125,10 +147,17 @@ def picking_card_player3():   # To jest funkcja, która dobiera trzecią kartę 
     global button1_3
     global button2_3
     points(first_letter(players_card5))
-    button1_3 = Button(window, text = "Dobierz kartę", bg="black", fg="white", command = picking_card_player4)
-    button1_3.place(x=0,y=50)
-    button2_3 = Button(window, text = "Nie dobieraj", bg="black", fg="white", command= picking_card_croupier1)
-    button2_3.place(x=0,y=95)
+    printing_points()
+    if player_total_points <21:
+        button1_3 = Button(window, text = "Dobierz kartę", bg="black", fg="white", command = picking_card_player4)
+        button1_3.place(x=0,y=50)
+        button2_3 = Button(window, text = "Nie dobieraj", bg="black", fg="white", command= picking_card_croupier1)
+        button2_3.place(x=0,y=80)
+    elif player_total_points ==21:
+        picking_card_croupier1()
+    elif player_total_points >21:
+        result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
+        result.place(x =550, y = 350)
 
 
 def picking_card_player4():  # To jest funkcja, która dobiera czwartą kartę dla gracza
@@ -143,7 +172,13 @@ def picking_card_player4():  # To jest funkcja, która dobiera czwartą kartę d
     button1_3.config(state = tk.DISABLED)
     button2_3.config(state = tk.DISABLED)
     points(first_letter(players_card6))
-    picking_card_croupier1()
+    printing_points()
+    if player_total_points <= 21:
+        picking_card_croupier1()
+    elif player_total_points >21:
+        result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
+        result.place(x =550, y = 350)
+
 
 
 
@@ -160,10 +195,15 @@ def picking_card_croupier1():  #To jest funkcja, która odkrywa zakrytą kartę 
     label.place(x=450,y=60)
     croupier.append(croupier_card2)
     points2(first_letter(croupier_card2))
+    printing_points()
     if croupier_total_points < 17:
         picking_card_croupier2()
-    elif croupier_total_points >= 17:
+    elif croupier_total_points ==21:
+        result = Label(window, text = "Krupier ma blackjacka. Przegrałeś.", bg="white", fg="black", font="none 15 bold")
+        result.place(x =550, y = 350)
+    elif croupier_total_points >= 17 and croupier_total_points!=21:
         points_counting()
+
 
 def picking_card_croupier2(): # To jest funnkcja, która dobiera pierwszą kartę krupiera.
     global image4
@@ -175,6 +215,7 @@ def picking_card_croupier2(): # To jest funnkcja, która dobiera pierwszą kart�
     label.place(x=525,y=60)
     croupier.append(croupier_card3)
     points2(first_letter(croupier_card3))
+    printing_points()
     if croupier_total_points < 17:
         picking_card_croupier3()
     elif croupier_total_points >= 17:
@@ -190,22 +231,33 @@ def picking_card_croupier3():  #To jest funkcja, która dobiera drugą kartę, k
     label.place(x=600,y=60)
     croupier.append(croupier_card4)
     points2(first_letter(croupier_card4))
+    printing_points()
     points_counting()
 
 
+def printing_points():  #Ta funkcja służy do wyświetlania punktów gracza i krupiera
+    player_points = "Masz: " + str(player_total_points) + " punktów."
+    croupier_points = "Krupier ma: " + str(croupier_total_points) + " punktów"
+    frame = Label(window, text =player_points, bg="white", fg="black", font="none 15 bold")
+    frame.place(x =550, y = 250)
+    frame = Label(window, text = croupier_points, bg="white", fg="black", font="none 15 bold")
+    frame.place(x =550, y = 300)
 
 
 def points_counting(): #Ta funkcja pozwala na podsumowanie otrzymanych punktów i wyświetlenie wyniku
-    print(player_total_points, croupier_total_points)
     if player_total_points >21 or croupier_total_points > player_total_points and croupier_total_points <21:
-        result = Label(window, text = "Przegrałeś.", bg="blue", fg="black", font="none 15 bold")
-        result.place(x =550, y = 300)
+        result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
+        result.place(x =550, y = 350)
     elif player_total_points == 21 and croupier_total_points !=21:
-         result = Label(window, text = "Masz blakcjacka! Gratulacje!", bg="blue", fg="black", font="none 15 bold")
-         result.place(x =550, y = 300)
+         result = Label(window, text = "Wygrałeś! Gratulacje!", bg="white", fg="black", font="none 15 bold")
+         result.place(x =550, y = 350)
+    elif player_total_points ==21 and croupier_total_points ==21:
+        result = Label(window, text = "Jest remis. Nie tracisz i nie zyskujesz.", bg="white", fg="black", font="none 15 bold")
+        result.place(x =550, y = 350)
     elif croupier_total_points >21 or player_total_points > croupier_total_points and player_total_points <21:
-         result = Label(window, text = "Wygrałeś! Gratulacje!", bg="blue", fg="black", font="none 15 bold")
-         result.place(x =550, y = 300)
+         result = Label(window, text = "Wygrałeś! Gratulacje!", bg="white", fg="black", font="none 15 bold")
+         result.place(x =550, y = 350)
+
 
 
 #tworzymy listę wszystkich plików w folderze
@@ -305,3 +357,4 @@ authors_button.place(x=348,y=0)
 
 
 window.mainloop()
+
