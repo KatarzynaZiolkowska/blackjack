@@ -75,6 +75,7 @@ def deal_of_cards():    #Ta funkcja zadziała po naciśnięciu przycisku:Zagraj 
     elif player_total_points ==21:
         result = Label(window, text = "Masz blakcjacka! Gratulacje!", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
+        restart.config(state = tk.NORMAL)
 
 
 
@@ -105,6 +106,7 @@ def picking_card_player1(): # To jest funkcja, która dobiera pierwszą kartę d
     elif player_total_points >21:
         result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
+        restart.config(state = tk.NORMAL)
 
 def picking_card_player2():  # To jest funkcja, która dobiera drugą kartę dla gracza
     global image8
@@ -131,6 +133,7 @@ def picking_card_player2():  # To jest funkcja, która dobiera drugą kartę dla
     elif player_total_points >21:
         result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
+        restart.config(state = tk.NORMAL)
 
 
 def picking_card_player3():   # To jest funkcja, która dobiera trzecią kartę dla gracza
@@ -158,6 +161,7 @@ def picking_card_player3():   # To jest funkcja, która dobiera trzecią kartę 
     elif player_total_points >21:
         result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
+        restart.config(state = tk.NORMAL)
 
 
 def picking_card_player4():  # To jest funkcja, która dobiera czwartą kartę dla gracza
@@ -178,6 +182,7 @@ def picking_card_player4():  # To jest funkcja, która dobiera czwartą kartę d
     elif player_total_points >21:
         result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
+        restart.config(state = tk.NORMAL)
 
 
 
@@ -201,6 +206,7 @@ def picking_card_croupier1():  #To jest funkcja, która odkrywa zakrytą kartę 
     elif croupier_total_points ==21:
         result = Label(window, text = "Krupier ma blackjacka. Przegrałeś.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
+        restart.config(state = tk.NORMAL)
     elif croupier_total_points >= 17 and croupier_total_points!=21:
         points_counting()
 
@@ -249,23 +255,94 @@ def points_counting(): #Ta funkcja pozwala na podsumowanie otrzymanych punktów 
         result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
     elif player_total_points == 21 and croupier_total_points !=21:
-         result = Label(window, text = "Wygrałeś! Gratulacje!", bg="white", fg="black", font="none 15 bold")
-         result.place(x =550, y = 350)
+        result = Label(window, text = "Wygrałeś! Gratulacje!", bg="white", fg="black", font="none 15 bold")
+        result.place(x =550, y = 350)
     elif player_total_points ==21 and croupier_total_points ==21:
         result = Label(window, text = "Jest remis. Nie tracisz i nie zyskujesz.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
     elif croupier_total_points >21 or player_total_points > croupier_total_points and player_total_points <21:
-         result = Label(window, text = "Wygrałeś! Gratulacje!", bg="white", fg="black", font="none 15 bold")
-         result.place(x =550, y = 350)
+        result = Label(window, text = "Wygrałeś! Gratulacje!", bg="white", fg="black", font="none 15 bold")
+        result.place(x =550, y = 350)
+    restart.config(state = tk.NORMAL)
 
+#teraz funkcje pieniężne
+def stawka_disable():
+    five.config(state = tk.DISABLED)
+    ten.config(state = tk.DISABLED)
+    twenty.config(state = tk.DISABLED)
+    thirty.config(state = tk.DISABLED)
+    forty.config(state = tk.DISABLED)
+    fifty.config(state = tk.DISABLED)
+    ok.config(state = tk.NORMAL)
+    deal_of_cards()
+
+def stawka5():
+    global player_total_money
+    player_total_money-=5
+    stawka_disable()
+
+def stawka10():
+    global player_total_money
+    player_total_money-=10
+    stawka_disable()
+
+def stawka20():
+    global player_total_money
+    player_total_money-=20
+    stawka_disable()
+
+def stawka30():
+    global player_total_money
+    player_total_money-=30
+    stawka_disable()
+
+def stawka40():
+    global player_total_money
+    player_total_money-=40
+    stawka_disable()
+
+def stawka50():
+    global player_total_money
+    player_total_money-=50
+    stawka_disable()
+
+def messageWindow():
+    win = Toplevel()
+    win.title('Stawka')
+    win.geometry("400x180")
+    global five
+    global ten
+    global twenty
+    global thirty
+    global forty
+    global fifty
+    global ok
+    message = 'Aktualnie masz '+str(player_total_money)+' złotych, ile chesz postawić?'
+    b=Label(win, text=message,font="none 13 bold")
+    b.place(x=10,y=10)
+    five=Button(win, text='5', bg="black", fg="white", font="none 15 bold", command=stawka5)
+    five.place(x=25,y=90)
+    ten=Button(win, text='10', bg="black", fg="white", font="none 15 bold",command=stawka10)
+    ten.place(x=75,y=90)
+    twenty=Button(win, text='20', bg="black", fg="white", font="none 15 bold", command=stawka20)
+    twenty.place(x=140,y=90)
+    thirty=Button(win, text='30', bg="black", fg="white", font="none 15 bold", command=stawka30)
+    thirty.place(x=205,y=90)
+    forty=Button(win, text='40', bg="black", fg="white", font="none 15 bold", command=stawka40)
+    forty.place(x=270,y=90)
+    fifty=Button(win, text='50', bg="black", fg="white", font="none 15 bold", command=stawka50)
+    fifty.place(x=330,y=90)
+    ok=Button(win, text='OK', state=DISABLED, command=win.destroy)
+    ok.place(x=180,y=150)
 
 
 #tworzymy listę wszystkich plików w folderze
 deck = os.listdir()
-deck.remove("blackjack_gui.py")
-# deck.remove("gujuuju.py")
+deck.remove("blackjack.py")
+deck.remove("gujuuju.py")
 deck.remove("purple_back.png")
-# deck.remove("gjuu.py")
+deck.remove("gjuu.py")
+deck.remove("dużyprojektgui.py")
 def los(deck):
     random_card=random.choice(deck)
     return random_card
@@ -341,9 +418,14 @@ def rules_info():
 def authors_info():
     messagebox.showinfo("Autorki programu","Łzy, krew i pot wylały:\nAnna Cichocka\nAnna Kołodziejczyk\nKatarzyna Ziółkowska\nSylwia Leśniewska")
 
+#restart programu
+def restart_program():
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
+
 
 # Uruchamianie przycisków
-play_button=Button(window, text="Zagraj", bg="red", fg="white", font="none 15 bold", command= deal_of_cards,)
+play_button=Button(window, text="Zagraj", bg="red", fg="white", font="none 15 bold", command= messageWindow)
 play_button.place(x=0,y=0)
 
 rules_button=Button(window, text="Zasady", bg="blue", fg="white", font="none 15 bold", command= rules_info)
@@ -354,6 +436,9 @@ quit_button.place(x=160,y=0)
 
 authors_button=Button(window, text="Autorki", bg="orange", fg="black", font="none 15 bold", command=authors_info)
 authors_button.place(x=348,y=0)
+
+restart=Button(window, text="Zagraj Ponownie", bg="grey", fg="black", font="none 15 bold",state=tk.DISABLED, command=restart_program)
+restart.place(x=450,y=0)
 
 
 window.mainloop()
