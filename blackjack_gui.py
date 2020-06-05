@@ -6,6 +6,11 @@ from tkinter import messagebox
 import tkinter as tk
 from PIL import Image , ImageTk
 
+window = tk.Tk()
+window.title("BLACKJACK")
+window.geometry("800x500")
+window.config(bg='green')
+
 player=[] #stowrzenie pustych list, do których program będzie dodawał kolejne karty
 croupier=[]
 
@@ -61,7 +66,7 @@ def deal_of_cards():    #Ta funkcja zadziała po naciśnięciu przycisku:Zagraj 
     button1 = Button(window, text = "Dobierz kartę", bg="black", fg="white", command = picking_card_player1)
     button1.place(x=0,y=50)
     button2 = Button(window, text = "Nie dobieraj", bg="black", fg="white", command= picking_card_croupier1)
-    button2.place(x=0,y=80)
+    button2.place(x=0,y=95)
     points(first_letter(players_card1))
     points(first_letter(players_card2))
     points2(first_letter(croupier_card1))
@@ -84,7 +89,7 @@ def picking_card_player1(): # To jest funkcja, która dobiera pierwszą kartę d
     button1_1 = Button(window, text = "Dobierz kartę", bg="black", fg="white", command = picking_card_player2)
     button1_1.place(x=0,y=50)
     button2_1 = Button(window, text = "Nie dobieraj", bg="black", fg="white", command= picking_card_croupier1)
-    button2_1.place(x=0,y=80)
+    button2_1.place(x=0,y=95)
 
 def picking_card_player2():  # To jest funkcja, która dobiera drugą kartę dla gracza
     global image8
@@ -103,7 +108,7 @@ def picking_card_player2():  # To jest funkcja, która dobiera drugą kartę dla
     button1_2 = Button(window, text = "Dobierz kartę", bg="black", fg="white", command = picking_card_player3)
     button1_2.place(x=0,y=50)
     button2_2 = Button(window, text = "Nie dobieraj", bg="black", fg="white", command= picking_card_croupier1)
-    button2_2.place(x=0,y=80)
+    button2_2.place(x=0,y=95)
 
 
 def picking_card_player3():   # To jest funkcja, która dobiera trzecią kartę dla gracza
@@ -123,7 +128,7 @@ def picking_card_player3():   # To jest funkcja, która dobiera trzecią kartę 
     button1_3 = Button(window, text = "Dobierz kartę", bg="black", fg="white", command = picking_card_player4)
     button1_3.place(x=0,y=50)
     button2_3 = Button(window, text = "Nie dobieraj", bg="black", fg="white", command= picking_card_croupier1)
-    button2_3.place(x=0,y=80)
+    button2_3.place(x=0,y=95)
 
 
 def picking_card_player4():  # To jest funkcja, która dobiera czwartą kartę dla gracza
