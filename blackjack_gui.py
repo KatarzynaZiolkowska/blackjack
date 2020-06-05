@@ -21,8 +21,17 @@ croupier_card4 = "0"
 
 player_total_points=0
 croupier_total_points = 0
-player_total_money=50
 money_on_the_table=0
+
+wynik=open("wynik.txt","r")
+player_total_money=wynik.read(10)
+player_total_money=int(player_total_money)
+wynik.close()
+def wallet():
+    wynik=open("wynik.txt","w")
+    wynik.write(str(new_money))
+    wynik.close()
+
 
 
 def deal_of_cards():    #Ta funkcja zadziała po naciśnięciu przycisku:Zagraj i rozda po dwie karty graczowi i krupierowi(jedna karta krupiera będzie zakryta).
@@ -30,7 +39,7 @@ def deal_of_cards():    #Ta funkcja zadziała po naciśnięciu przycisku:Zagraj 
     player_field.place(x= 20, y = 270)
     croupier_field = Label(window, text ="Karty krupiera:", bg="white", fg="green", font="none 10 bold")
     croupier_field.place(x= 250, y = 50)
-    
+
     global image1
     global players_card1
     players_card1=los(deck)
@@ -72,16 +81,22 @@ def deal_of_cards():    #Ta funkcja zadziała po naciśnięciu przycisku:Zagraj 
 
     global button1 #Tu powstają przyciski które pozwalają graczowi na podjęcie decyzji czy dobiera kartę, czy też nie dobiera
     global button2
+    global double_rate
     if player_total_points <21:
         button1 = Button(window, text = "Dobierz kartę", bg="black", fg="white", command = picking_card_player1)
         button1.place(x=0,y=50)
         button2 = Button(window, text = "Nie dobieraj", bg="black", fg="white", command= picking_card_croupier1)
         button2.place(x=0,y=80)
+        #nowe
+        double_rate = Button(window, text = "Podwój stawkę", bg="black", fg="white", command= doub_rate)
+        double_rate.place(x=0,y=110)
     elif player_total_points ==21:
         result = Label(window, text = "Masz blakcjacka! Gratulacje!", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
         restart.config(state = tk.NORMAL)
         win_rate(3)
+        wallet()
+        double_rate.destroy()
 
 
  #Teraz rozpisane zostaną funkcje pozwalające graczowi na dobieranie kolejnych kart i doliczanie ich wartości do łącznej liczby punktów gracza
@@ -96,6 +111,7 @@ def picking_card_player1(): # To jest funkcja, która dobiera pierwszą kartę d
     player.append(players_card3)
     button1.config(state = tk.DISABLED)
     button2.config(state = tk.DISABLED)
+    double_rate.destroy()
     global button1_1
     global button2_1
     points(first_letter(players_card3))
@@ -112,6 +128,7 @@ def picking_card_player1(): # To jest funkcja, która dobiera pierwszą kartę d
         result.place(x =550, y = 350)
         restart.config(state = tk.NORMAL)
         win_rate(2)
+        wallet()
 
 
 def picking_card_player2():  # To jest funkcja, która dobiera drugą kartę dla gracza
@@ -141,6 +158,7 @@ def picking_card_player2():  # To jest funkcja, która dobiera drugą kartę dla
         result.place(x =550, y = 350)
         restart.config(state = tk.NORMAL)
         win_rate(2)
+        wallet()
 
 
 def picking_card_player3():   # To jest funkcja, która dobiera trzecią kartę dla gracza
@@ -170,6 +188,7 @@ def picking_card_player3():   # To jest funkcja, która dobiera trzecią kartę 
         result.place(x =550, y = 350)
         restart.config(state = tk.NORMAL)
         win_rate(2)
+        wallet()
 
 
 def picking_card_player4():  # To jest funkcja, która dobiera czwartą kartę dla gracza
@@ -192,6 +211,7 @@ def picking_card_player4():  # To jest funkcja, która dobiera czwartą kartę d
         result.place(x =550, y = 350)
         restart.config(state = tk.NORMAL)
         win_rate(2)
+        wallet()
 
 
 
@@ -202,6 +222,7 @@ def picking_card_player4():  # To jest funkcja, która dobiera czwartą kartę d
 def picking_card_croupier1():  #To jest funkcja, która odkrywa zakrytą kartę krupiera.
     global image5
     global croupier_card2
+    double_rate.destroy()
     croupier_card2=los(deck)
     image5 = tk.PhotoImage(file = croupier_card2)
     image5 = image5.subsample(6)
@@ -217,6 +238,7 @@ def picking_card_croupier1():  #To jest funkcja, która odkrywa zakrytą kartę 
         result.place(x =550, y = 350)
         restart.config(state = tk.NORMAL)
         win_rate(2)
+        wallet()
     elif croupier_total_points >= 17 and croupier_total_points!=21:
         points_counting()
 
@@ -268,29 +290,35 @@ def points_counting(): #Ta funkcja pozwala na podsumowanie otrzymanych punktów 
         result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
         win_rate(2)
+        wallet()
     elif player_total_points == 21 and croupier_total_points !=21:
         result = Label(window, text = "Wygrałeś! Gratulacje!", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
         win_rate(1)
+        wallet()
     elif croupier_total_points == 21 and player_total_points != 21:
         result = Label(window, text = "Przegrałeś.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
         win_rate(2)
+        wallet()
     elif player_total_points ==21 and croupier_total_points ==21:
         result = Label(window, text = "Jest remis. Nie tracisz i nie zyskujesz.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
         win_rate(4)
+        wallet()
     elif croupier_total_points >21 or player_total_points > croupier_total_points and player_total_points <21:
         result = Label(window, text = "Wygrałeś! Gratulacje!", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
         win_rate(1)
+        wallet()
     elif player_total_points == croupier_total_points:
         result = Label(window, text = "Jest remis. Nie tracisz i nie zyskujesz.", bg="white", fg="black", font="none 15 bold")
         result.place(x =550, y = 350)
         win_rate(4)
+        wallet()
     restart.config(state = tk.NORMAL)
-    
-    
+
+
 def stawka_disable():
     five.config(state = tk.DISABLED)
     ten.config(state = tk.DISABLED)
@@ -300,30 +328,36 @@ def stawka_disable():
     fifty.config(state = tk.DISABLED)
     ok.config(state = tk.NORMAL)
     deal_of_cards()
-    
+
 def win_rate(number):
+    global new_money
     #normalna wygrana
     if number==1:
         final_rate = Label(window, text = "Wygrałeś stawkę "+str(money_on_the_table)+" zł", bg="white", fg="black", font="none 15 bold")
         final_rate.place(x =550, y = 400)
-        final_money = Label(window, text = "Masz teraz łącznie "+str(player_total_money+money_on_the_table*2)+" zł", bg="white", fg="black", font="none 15 bold")
+        new_money=player_total_money+money_on_the_table*2
+        final_money = Label(window, text = "Masz teraz łącznie "+str(new_money)+" zł", bg="white", fg="black", font="none 15 bold")
         final_money.place(x =550, y = 450)
     #Przegrana
     elif number==2:
         final_rate = Label(window, text = "Przegrałeś stawkę "+str(money_on_the_table)+" zł", bg="white", fg="black", font="none 15 bold")
         final_rate.place(x =550, y = 400)
-        final_money = Label(window, text = "Masz teraz łącznie "+str(player_total_money)+" zł", bg="white", fg="black", font="none 15 bold")
+        new_money=player_total_money
+        final_money = Label(window, text = "Masz teraz łącznie "+str(new_money)+" zł", bg="white", fg="black", font="none 15 bold")
         final_money.place(x =550, y = 450)
     #blackjack
     elif number==3:
-        final_rate = Label(window, text = "Wygrałeś 1,5x stawki "+str(money_on_the_table*1,5)+" zł", bg="white", fg="black", font="none 15 bold")
+        bj=money_on_the_table*1.5
+        final_rate = Label(window, text = "Wygrałeś 1,5x stawki "+str(bj)+" zł", bg="white", fg="black", font="none 15 bold")
         final_rate.place(x =550, y = 400)
-        final_money = Label(window, text = "Masz teraz łącznie "+str(player_total_money+money_on_the_table*2,5)+" zł", bg="white", fg="black", font="none 15 bold")
+        new_money=player_total_money+money_on_the_table*2,5
+        final_money = Label(window, text = "Masz teraz łącznie "+str(new_money)+" zł", bg="white", fg="black", font="none 15 bold")
         final_money.place(x =550, y = 450)
     elif number==2:
         final_rate = Label(window, text = "Stawkę "+str(money_on_the_table)+" zł, wraca", bg="white", fg="black", font="none 15 bold")
         final_rate.place(x =550, y = 400)
-        final_money = Label(window, text = "Masz teraz łącznie "+str(player_total_money+money_on_the_table)+" zł", bg="white", fg="black", font="none 15 bold")
+        new_money==player_total_money+money_on_the_table
+        final_money = Label(window, text = "Masz teraz łącznie "+str(new_money)+" zł", bg="white", fg="black", font="none 15 bold")
         final_money.place(x =550, y = 450)
 
 #teraz funkcje pieniężne
@@ -398,6 +432,15 @@ def messageWindow():
     ok=Button(win, text='OK', state=DISABLED, command=win.destroy)
     ok.place(x=180,y=150)
 
+#nowe
+def doub_rate():
+    global money_on_the_table
+    money_on_the_table=money_on_the_table*2
+    double_rate.destroy()
+    rate= "Twoja stawka to: " + str(money_on_the_table) + " zł"
+    frame = Label(window, text = rate, bg="white", fg="black", font="none 15 bold")
+    frame.place(x =550, y = 400)
+
 
 #tworzymy listę wszystkich plików w folderze
 deck = os.listdir()
@@ -406,6 +449,7 @@ deck.remove("gujuuju.py")
 deck.remove("purple_back.png")
 deck.remove("gjuu.py")
 deck.remove("dużyprojektgui.py")
+deck.remove("wynik.txt")
 def los(deck):
     random_card=random.choice(deck)
     return random_card
