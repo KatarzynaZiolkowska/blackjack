@@ -5,33 +5,18 @@ from tkinter import messagebox
 import tkinter as tk
 from PIL import Image , ImageTk
 
-window = tk.Tk() #to open the window (ważne! Tk zamiast tk)
-window.title("BLACKJACK")
-window.geometry("800x500")
-window.config(bg='green')
-
-player=[] #stowrzenie pustych list, do których program będzie dodawał kolejne karty
-croupier=[]
-
-players_card4 ="0"  #przypisanie początkowych nazw dobieranym kartom, tak by można było doliczyć "zerową ilość punktów" na wypadek niedobrania danej karty.
-players_card5 ="0"
-players_card6 ="0"
-croupier_card3 = "0"
-croupier_card4 = "0"
-
-player_total_points=0
-croupier_total_points = 0
-money_on_the_table=0
-
-wynik=open("wynik.txt","r")
-player_total_money=wynik.read(10)
-player_total_money=int(player_total_money)
-wynik.close()
 def wallet():
     wynik=open("wynik.txt","w")
     wynik.write(str(new_money))
     wynik.close()
 
+def los(deck):
+    random_card=random.choice(deck)
+    return random_card
+#używamy pierwszej litery pliku do rozpoznania karty (dlatego też dobrze by było, żeby w folderze znajdowały)
+def first_letter(random_card):
+    random_card_symbol=random_card[0]
+    return random_card_symbol
 
 
 def deal_of_cards():    #Ta funkcja zadziała po naciśnięciu przycisku:Zagraj i rozda po dwie karty graczowi i krupierowi(jedna karta krupiera będzie zakryta).
@@ -310,6 +295,7 @@ def picking_card_croupier5():  #To jest funkcja, która dobiera czwartą kartę,
     elif croupier_total_points >= 17:
         points_counting()
 
+
 def printing_points():  #Ta funkcja służy do wyświetlania punktów gracza i krupiera
     player_points = "Masz: " + str(player_total_points) + " punktów."
     croupier_points = "Krupier ma: " + str(croupier_total_points) + " punktów"
@@ -384,10 +370,10 @@ def win_rate(number):
         final_money.place(x =550, y = 450)
     #blackjack
     elif number==3:
-        bj=money_on_the_table*1.5
-        final_rate = Label(window, text = "Wygrałeś 1,5x stawki "+str(bj)+" zł", bg="white", fg="black", font="none 15 bold")
+        bj=money_on_the_table*2
+        final_rate = Label(window, text = "Wygrałeś 2x stawkę "+str(bj)+" zł", bg="white", fg="black", font="none 15 bold")
         final_rate.place(x =550, y = 400)
-        new_money=player_total_money+money_on_the_table*2.5
+        new_money=player_total_money+money_on_the_table*3
         final_money = Label(window, text = "Masz teraz łącznie "+str(new_money)+" zł", bg="white", fg="black", font="none 15 bold")
         final_money.place(x =550, y = 450)
     elif number==2:
@@ -478,23 +464,6 @@ def doub_rate():
     frame = Label(window, text = rate, bg="white", fg="black", font="none 15 bold")
     frame.place(x =550, y = 400)
 
-
-#tworzymy listę wszystkich plików w folderze
-deck = os.listdir()
-deck.remove("blackjack.py")
-deck.remove("gujuuju.py")
-deck.remove("purple_back.png")
-deck.remove("gjuu.py")
-deck.remove("dużyprojektgui.py")
-deck.remove("wynik.txt")
-def los(deck):
-    random_card=random.choice(deck)
-    return random_card
-#używamy pierwszej litery pliku do rozpoznania karty (dlatego też dobrze by było, żeby w folderze znajdowały)
-def first_letter(random_card):
-    random_card_symbol=random_card[0]
-    return random_card_symbol
-
 #Funkcje przypisujące wartości poszczególnym kartom.
 def points(card):
     global player_total_points
@@ -557,7 +526,7 @@ def points2(card):
 
 #Funkcje dla przycisków z informacjami
 def rules_info():
-    messagebox.showinfo("Zasady","Celem gry jest pokonać krupiera poprzez uzyskanie sumy jak najbliższej 21 punktów, jednak nie przekraczając 21. Gracz stawia zakład na specjalnym stole używając żetonów. Następnie gracz i krupier dostają po dwie karty. Obydwie karty gracza są odkryte, natomiast tylko jedna card krupiera jest pokazana graczowi\nPUNKTACJA KART:\nKarty od dwójki do dziesiątki mają wartość równą numerowi karty.\nWalet, Dama i Król mają wartość równą 10 punktów.\nAs ma wartość równą 1 lub 11, w zależności co jest lepsze dla gracza.\nMOŻLIWOŚCI RUCHU\nW swojej turze możesz:\n1) Dobrać kartę (hit)\n2) Nie dobierać kart (stand)\n3) Podwoić stawkę (double down)\n4) Rozdwoić karty (split)")
+    messagebox.showinfo("Zasady","Celem gry jest pokonać krupiera poprzez uzyskanie sumy jak najbliższej 21 punktów, jednak nie przekraczając 21. Gracz stawia zakład na specjalnym stole używając żetonów. Następnie gracz i krupier dostają po dwie karty. Obydwie karty gracza są odkryte, natomiast tylko jedna card krupiera jest pokazana graczowi\nPUNKTACJA KART:\nKarty od dwójki do dziesiątki mają wartość równą numerowi karty.\nWalet, Dama i Król mają wartość równą 10 punktów.\nAs ma wartość równą 1 lub 11, w zależności co jest lepsze dla gracza.\nMOŻLIWOŚCI RUCHU\nW swojej turze możesz:\n1) Dobrać kartę (hit)\n2) Nie dobierać kart (stand)\n3) Podwoić stawkę (double down)")
 
 def authors_info():
     messagebox.showinfo("Autorki programu","Łzy, krew i pot wylały:\nAnna Cichocka\nAnna Kołodziejczyk\nKatarzyna Ziółkowska\nSylwia Leśniewska")
@@ -567,6 +536,36 @@ def restart_program():
     python = sys.executable
     os.execl(python, python, * sys.argv)
 
+
+window = tk.Tk() #to open the window (ważne! Tk zamiast tk)
+window.title("BLACKJACK")
+window.geometry("800x500")
+window.config(bg='green')
+
+player=[] #stowrzenie pustych list, do których program będzie dodawał kolejne karty
+croupier=[]
+
+players_card4 ="0"  #przypisanie początkowych nazw dobieranym kartom, tak by można było doliczyć "zerową ilość punktów" na wypadek niedobrania danej karty.
+players_card5 ="0"
+players_card6 ="0"
+croupier_card3 = "0"
+croupier_card4 = "0"
+croupier_card5 = "0"
+
+player_total_points=0
+croupier_total_points = 0
+money_on_the_table=0
+
+wynik=open("wynik.txt","r")
+player_total_money=wynik.read(10)
+player_total_money=int(player_total_money)
+wynik.close()
+
+#tworzymy listę wszystkich plików w folderze
+deck = os.listdir()
+deck.remove("blackjack_gui.py")
+deck.remove("purple_back.png")
+deck.remove("wynik.txt")
 
 # Uruchamianie przycisków
 play_button=Button(window, text="Zagraj", bg="red", fg="white", font="none 15 bold", command= messageWindow)
@@ -586,4 +585,3 @@ restart.place(x=450,y=0)
 
 
 window.mainloop()
-
