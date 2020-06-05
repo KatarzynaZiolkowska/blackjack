@@ -310,6 +310,16 @@ def picking_card_croupier5():  #To jest funkcja, która dobiera czwartą kartę,
     elif croupier_total_points >= 17:
         points_counting()
 
+def printing_points():  #Ta funkcja służy do wyświetlania punktów gracza i krupiera
+    player_points = "Masz: " + str(player_total_points) + " punktów."
+    croupier_points = "Krupier ma: " + str(croupier_total_points) + " punktów"
+    rate= "Twoja stawka to: " + str(money_on_the_table) + " zł"
+    frame = Label(window, text =player_points, bg="white", fg="black", font="none 15 bold")
+    frame.place(x =550, y = 250)
+    frame = Label(window, text = croupier_points, bg="white", fg="black", font="none 15 bold")
+    frame.place(x =550, y = 300)
+    frame = Label(window, text = rate, bg="white", fg="black", font="none 15 bold")
+    frame.place(x =550, y = 400)
 
 
 def points_counting(): #Ta funkcja pozwala na podsumowanie otrzymanych punktów i wyświetlenie wyniku
